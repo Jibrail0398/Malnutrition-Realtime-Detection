@@ -1,12 +1,18 @@
 import * as ort from "onnxruntime-web";
 
+const classNames = [
+  "Normal", // Ganti dengan nama kelas asli Anda
+  "Gizi_Buruk", 
+  
+];
+
 /**
  * Fungsi utama untuk memproses video, menjalankan model, dan menggambar kotak
  */
 export const runObjectDetection = async (video, canvas, session) => {
   // Ukuran standar input model YOLOv10
-  const modelWidth = 256;
-  const modelHeight = 256;
+  const modelWidth = 640;
+  const modelHeight = 640;
 
   // 1. PREPROCESSING: Ambil gambar dari video dan ubah ukurannya
   // Kita buat canvas sementara (tidak tampil di layar) untuk me-resize gambar video
@@ -90,7 +96,11 @@ const renderBoxes = (canvas, outputData, videoWidth, videoHeight, modelWidth, mo
       // --- Mulai Menggambar Label Text ---
       ctx.fillStyle = "#00FF00";
       ctx.font = "18px Arial";
-      const label = `Objek ${classId} (${Math.round(score * 100)}%)`;
+      const className = classNames[classId] || `Objek ${classId}`; 
+      const label = `${className} (${Math.round(score * 100)}%)`;
+      const classColors = ["#00FF00", "#FF0000"];
+      ctx.strokeStyle = classColors[classId] || "#00FF00";
+      ctx.fillStyle = classColors[classId] || "#00FF00";
       ctx.fillText(label, x1, y1 - 5);
     }
   }
