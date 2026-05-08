@@ -14,7 +14,6 @@ export function useModel(modelURL){
             setLoading(true);
             try{
               
-                
                 const mySession = await ort.InferenceSession.create(modelURL, {
                 executionProviders: ['wasm'],
                 graphOptimizationLevel: 'all'

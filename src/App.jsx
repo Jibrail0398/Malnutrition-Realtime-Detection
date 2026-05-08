@@ -19,7 +19,7 @@ function App() {
         <h2>Sedang memuat model YOLOv10...</h2>
       </div>
     ):(
-      <Camera/>
+      <Camera session={session} />
     )}
 
     </>
